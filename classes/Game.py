@@ -1,8 +1,9 @@
+from classes.ObjetoDoMundo import ObjetoDoMundo
+from classes.atores.atores import Bandido
 from classes.Mundo import Mundo
 import utilidades
 import sys
 import random
-from typing import List, Optional, Union
 import msvcrt
 
 import graficos
@@ -17,7 +18,7 @@ class Game:
     def getBandidos(self):
         return self.mundo.getItemPorSimbolo(graficos.graficos['simbolos']['bandido'])
 
-    def moveObjeto(self, objeto, x, y):
+    def moveObjeto(self, objeto: ObjetoDoMundo, x:int, y:int):
 
         # checa se está querendo continuar parado
         if x == 0 and y == 0:
@@ -49,6 +50,31 @@ class Game:
             print('Adios!!!')
             sys.exit()
         return char
+    
+    # No turno do bandido (AI)
+    # Procurar o Heroi
+    # Calcular a menor distancia para chegar ao Heroi
+    # Se mover em direção a ele
+    # Mais tarde, ele pode também levar em consideração a posição atual do segundo bandido
+    def turnoBandido(self, bandido:ObjetoDoMundo):
+        # posição do herói após a jogada dele
+        heroi = self.mundo.getItemPorSimbolo('@')[0]
+        
+        # diferença entre a sua posição e a do herói
+        deltaX = (heroi.x or 0)  - (bandido.x or 0)
+        deltaY = (heroi.y or 0) - (bandido.y or 0)
+
+        #sua velocidade
+        velocidade = 1
+
+        # suas jogadas
+        self.moveObjeto(
+            bandido, 
+            
+            # PARA FAZER: limita a movimentação baseado na posição do herói. Ex. mesmo que você possa andar mais que a distancia entre você e o herói, você não ultrapassa ele
+            velocidade if deltaX > 0 else -velocidade ,
+            velocidade if deltaY > 0 else -velocidade ,
+            )
 
     def turnoLogico(self):
         char = self.pegaOInputDoTurno()
@@ -73,11 +99,8 @@ class Game:
 
         # pega os outros personagens
         for bandido in self.getBandidos():
-
-            # por enquanto eles se movem aleatóriamente
-            self.moveObjeto(bandido, random.randint(-1, 1),
-                            random.randint(-1, 1))
-
+            self.turnoBandido(bandido)
+            
     def turnoTotal(self, turno: int):
         # se for o turno inicial gera o mapa antes do primeiro movimento
         if turno != 0:

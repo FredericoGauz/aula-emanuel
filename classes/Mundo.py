@@ -10,7 +10,7 @@ maxY é equivalente à dimensoes['y']
 """
 
 import random
-from typing import List
+from typing import List, AnyStr
 import utilidades
 from classes.ObjetoDoMundo import ObjetoDoMundo
 
@@ -54,8 +54,8 @@ class Mundo:
                 return item, index
         return None, None
 
-    def getItemPorSimbolo(self, simbolo):
-        items = []
+    def getItemPorSimbolo(self, simbolo:AnyStr):
+        items:List[ObjetoDoMundo] = []
         for _, item in enumerate(self.items):
             if item.objeto.simbolo == simbolo:
                 items.append(item)
