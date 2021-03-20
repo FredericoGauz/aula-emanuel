@@ -6,8 +6,8 @@ from classes.Game import Game
 from classes.atores.atores import Bandido, Heroi
 
 # CONSTANTES
-comprimento = 10
-largura = 10
+comprimento = 20
+largura = 20
 
 # cria a classe Mundo
 mundo = Mundo(comprimento, largura)
@@ -15,8 +15,8 @@ mundo = Mundo(comprimento, largura)
 # adiciona personagens
 # aqui é aonde podemos colocar aleatoriedade no jogo
 mundo.adicionaObjeto(ObjetoDoMundo(Heroi('Emanuel'), 0, 0))
-mundo.adicionaObjeto(ObjetoDoMundo(Bandido('El Cid'), 2, 2))
-mundo.adicionaObjeto(ObjetoDoMundo(Bandido('El Raton'), 4, 6))
+mundo.adicionaObjeto(ObjetoDoMundo(Bandido('El Cid'), 4, 4))
+mundo.adicionaObjeto(ObjetoDoMundo(Bandido('El Raton'), 8, 8))
 
 # cria a classe Game
 game = Game(mundo)
